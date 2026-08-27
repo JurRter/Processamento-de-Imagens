@@ -53,14 +53,25 @@ def ampliar_reduzir_bilinear(matriz_imagem, nova_altura, nova_largura):
             pixel_baixo_esq = matriz_imagem[x_superior][y_inferior]
             pixel_baixo_dir = matriz_imagem[x_superior][y_superior]
             
+            # Distancias da posicao calculada para os pixels vizinhos.
+            peso_x = x - x_inferior
+            peso_y = y - y_inferior
+
+            # Primeiro interpola na horizontal e depois na vertical.
+            pixel_topo = (
+                pixel_topo_esq * (1 - peso_y)
+                + pixel_topo_dir * peso_y
+            )
+            pixel_baixo = (
+                pixel_baixo_esq * (1 - peso_y)
+                + pixel_baixo_dir * peso_y
+            )
             pixel_final = (
-                pixel_topo_esq
-                + pixel_topo_dir
-                + pixel_baixo_esq
-                + pixel_baixo_dir
-            ) / 4
+                pixel_topo * (1 - peso_x)
+                + pixel_baixo * peso_x
+            )
             
-            nova_linha.append(int(pixel_final))
+            nova_linha.append(round(pixel_final))
             
         nova_matriz.append(nova_linha)
         
@@ -78,5 +89,5 @@ for l in ampliar_reduzir_vizinho(imagem_teste, 5, 5):
     print(l)
 
 print("\nTeste de Ampliação (Bilinear):")
-for l in ampliar_reduzir_bilinear(imagem_teste, 2, 2):
+for l in ampliar_reduzir_bilinear(imagem_teste, 5, 5):
     print(l)
