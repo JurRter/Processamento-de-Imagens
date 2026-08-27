@@ -53,11 +53,9 @@ def ampliar_reduzir_bilinear(matriz_imagem, nova_altura, nova_largura):
             pixel_baixo_esq = matriz_imagem[x_superior][y_inferior]
             pixel_baixo_dir = matriz_imagem[x_superior][y_superior]
             
-            # Distancias da posicao calculada para os pixels vizinhos.
             peso_x = x - x_inferior
             peso_y = y - y_inferior
 
-            # Primeiro interpola na horizontal e depois na vertical.
             pixel_topo = (
                 pixel_topo_esq * (1 - peso_y)
                 + pixel_topo_dir * peso_y
