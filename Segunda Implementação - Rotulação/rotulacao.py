@@ -1,3 +1,4 @@
+from pathlib import Path
 from PIL import Image
 import random
 
@@ -77,4 +78,7 @@ def rotular_imagem(caminho_entrada, caminho_saida):
     imagem_saida.save(caminho_saida)
 
 if __name__ == "__main__":
-    rotular_imagem("imagem_teste.png", "resultado.png")
+    pasta = Path(__file__).resolve().parent
+    caminho_saida = pasta / "resultado_componentes.png"
+    rotular_imagem(pasta / "imagem_componentes.png", caminho_saida)
+    print("Rotulação salva em:", caminho_saida)

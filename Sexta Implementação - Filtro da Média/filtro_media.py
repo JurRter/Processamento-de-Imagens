@@ -1,3 +1,4 @@
+from pathlib import Path
 from PIL import Image
 
 
@@ -21,12 +22,18 @@ def aplicar_media_padding_zeros(imagem):
 
 
 def executar():
-    caminho = input("Caminho da imagem: ").strip().strip('"')
+    pasta = Path(__file__).resolve().parent
+    caminho = input("Caminho da imagem (Enter para imagem_ruido.png): ").strip().strip('"')
+    if not caminho:
+        caminho = pasta / "imagem_ruido.png"
     try:
         with Image.open(caminho) as entrada:
             resultado = aplicar_media_padding_zeros(entrada)
-        resultado.save("media.png")
-        print("Média salva na pasta de execução.")
+        pasta_saida = pasta / "resultados"
+        pasta_saida.mkdir(exist_ok=True)
+        caminho_saida = pasta_saida / "media.png"
+        resultado.save(caminho_saida)
+        print("Média salva em:", caminho_saida)
     except (OSError, ValueError) as erro:
         print("Erro:", erro)
         raise SystemExit(1)
